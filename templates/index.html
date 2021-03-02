@@ -1,0 +1,66 @@
+<html>
+<body>
+    <h1>Welcome to deepc test!</h1>
+        <h2>The assignment</h2>
+            <p>Consists of a logic puzzle which you will need to (a) solve, and then (b) develop a coding segment.
+            Logic Puzzle:</p>
+            <ul>
+                <li>There are 8 identical looking balls, but one is heavier than the others</li>
+                <li>You have a set of balancing scales</li>
+                <li>You want to optimize the number of weighs needed to identify the heavier ball</li></ul></p>
+        <h2>My solution</h2>
+            <p>First, I name the balls randomly like below. Let's assume the balls have these weights and we don't know the weights</p>
+            <ul>
+                {% for ball in balls %}
+                    <li>Ball {{ ball[0] }} is {{ ball[1] }} gram heavy</li>
+                {% endfor %}
+            </ul>
+            <p>Then, I divide these 8 balls to 3 subsets of 3,3 and 2 balls. The sets are:</p>
+            <ul>
+                <li>The first set: 
+                    {% for ball in balls[0:3] %}
+                        {{ ball[0] }},
+                    {% endfor %}
+                </li>
+                <li>The second set:
+                    {% for ball in balls[3:6] %}
+                        {{ ball[0] }},
+                    {% endfor %}
+                </li>
+                <li>The third set:
+                    {% for ball in balls[6:8] %}
+                        {{ ball[0] }},
+                    {% endfor %}
+                </li>
+            </ul>
+            <h3>
+                First measurement
+            </h3>
+            <p>
+                I put the first two sets (each has 3 balls) to the balancing scale.
+            </p>
+            <h3>
+                Second measurement
+            </h3>
+            <ul>
+                <li><b>Case 1:</b> If the scale is balanced in the first measurement, I know that the heavy ball is in the third set (which consists of 2 balls). In the next measurement, I put two balls of the third set to the balancing scale. Then I can conclude which ball is the heavy ball.</li>
+                <li><b>Case 2:</b> If the scale is NOT balanced, I know that the heavy ball is in the heavier set. Next, I put 2 balls in this heavy set on the balancing scale and keep the third ball. If it is balanced, I can conclude the ball I'm keeping is the heavy one. If it is not balanced, I can determine which ball among those two is the heavy one.</li>
+            </ul>
+            <h3>Conclusion</h3>
+            <ul>
+                <li>The heavy set has 
+                {% for ball in heavy_set %}
+                    {{ ball[0] }},
+                {% endfor %}
+                </li>
+                <li>
+                    The heavy ball is {{result}}
+                </li>
+            </ul>
+        <h2>My code solution</h2>
+            <h3>measure()</h3>
+            <p>I made a function called <b>measure( )</b>. This function takes 3 sets (3 parameters) and calculates the weights of two sets to decide whether it is balanced. Then this function returns the heavy set. It is used in both 2 measurements. In the first measurement, it returns the heavy set consisting of multiple balls. In the second measurement, it returns only the heavy ball</p>
+            <h3>calculate()</h3>
+            <p>How do measure() decides whether the scale is balanced? Function measure() calls calculate() on each set of ball to get that set's total weight. Then it compares the weights of 2 sets to decide the balance.</p>
+</body>
+</html>
